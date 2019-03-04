@@ -10,11 +10,18 @@
 
 {% block main_action %}
 {% if current_user.global_admin %}
-<a class="btn btn-primary" href="{{ url_for(".domain_genkeys", domain_name=domain.name) }}">
+<a class="btn btn-primary" href="{{ url_for(".domain_genkeys", domain_name=domain.name, key_size="1024") }}">
   {% if domain.dkim_publickey %}
-  {% trans %}Regenerate keys{% endtrans %}
+  {% trans %}Regenerate 1024 bit keys{% endtrans %}
   {% else %}
-  {% trans %}Generate keys{% endtrans %}
+  {% trans %}Generate 1024 bit keys{% endtrans %}
+  {% endif %}
+</a>
+<a class="btn btn-primary" href="{{ url_for(".domain_genkeys", domain_name=domain.name, key_size="2048") }}">
+  {% if domain.dkim_publickey %}
+  {% trans %}Regenerate 2048 bit keys{% endtrans %}
+  {% else %}
+  {% trans %}Generate 2048 bit keys{% endtrans %}
   {% endif %}
 </a>
 {% endif %}
