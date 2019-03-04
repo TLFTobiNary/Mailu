@@ -68,12 +68,12 @@ def domain_details(domain_name):
     return flask.render_template('domain/details.html', domain=domain)
 
 
-@ui.route('/domain/genkeys/<domain_name>', methods=['GET', 'POST'])
+@ui.route('/domain/genkeys/<domain_name>/<key_size>', methods=['GET', 'POST'])
 @access.domain_admin(models.Domain, 'domain_name')
 @access.confirmation_required("regenerate keys for {domain_name}")
 def domain_genkeys(domain_name):
     domain = models.Domain.query.get(domain_name) or flask.abort(404)
-    domain.generate_dkim_key()
+    domain.generate_dkim_key(key_size)
     return flask.redirect(
         flask.url_for(".domain_details", domain_name=domain_name))
 
